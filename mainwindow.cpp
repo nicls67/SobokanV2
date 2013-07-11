@@ -34,12 +34,20 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    setFixedSize(W_FEN+20,H_FEN+20);
+    /*
+     * Window size = W+1, H+22
+     */
+    setFixedSize(W_FEN+1,H_FEN+22);
+
     zoneCentrale = new QWidget;
     setCentralWidget(zoneCentrale);
     setFocusPolicy(Qt::StrongFocus);
 
     map=NULL;
+    scene=NULL;
+    vue=NULL;
+
+    ingame=false;
 
     creationMenu();
     creationScene();
@@ -107,7 +115,8 @@ void MainWindow::creationScene(){
     scene =  new QGraphicsScene;
 
     vue= new QGraphicsView(scene, zoneCentrale);
-    vue->setSceneRect(0,0,W_FEN,H_FEN);
+    //vue->setSceneRect(0,0,W_FEN,H_FEN);
+    vue->setSceneRect(0,0,1500,1500);
 }
 
 
@@ -139,10 +148,11 @@ void MainWindow::exe_new_lvl(){
  *
  * @brief Load a level from a file
  * @author Nicolas SIMON
- * @date 09/07/2013
- * @version 1.0
+ * @date 11/07/2013
+ * @version 1.0.2
  */
 void MainWindow::chargerNiveau(){
+
     nomFichier = QFileDialog::getOpenFileName(this, "Ouvrir", "levels", "Sobokan level files (*.lvl)");
 
     ifstream f(nomFichier.toStdString().c_str(), ios::in | ios::binary);
@@ -150,8 +160,16 @@ void MainWindow::chargerNiveau(){
     int grille[H][W];
     position pos;
 
+    int test; //for testing reading file only
+
     if(f.is_open()){
-        f.read((char*)&grille,sizeof(int[H][W]));
+        f.read((char*)&test,sizeof(int));
+        f.read((char*)&test,sizeof(int));
+        for(int i=0;i<H;i++){
+            for(int j=0;j<W;j++){
+                f.read((char*)&grille[i][j],sizeof(int));
+            }
+        }
         f.read((char*)&pos,sizeof(position));
         f.close();
     }
@@ -165,12 +183,12 @@ void MainWindow::chargerNiveau(){
     map = new Map(grille,pos,BAS);
 
     scene->clear();
-    //delete scene;
-    //delete vue;
-    //creationScene();
     updateScene();
+    ingame=true;
 
     recommencer->setEnabled(true);
+
+    return;
 }
 
 
@@ -181,8 +199,8 @@ void MainWindow::chargerNiveau(){
  *
  * @brief Reload the current level
  * @author Nicolas SIMON
- * @date 09/07/2013
- * @version 1.0
+ * @date 11/07/2013
+ * @version 1.0.2
  */
 void MainWindow::recommencerNiveau(){
     ifstream f(nomFichier.toStdString().c_str(), ios::in | ios::binary);
@@ -190,17 +208,31 @@ void MainWindow::recommencerNiveau(){
     int grille[H][W];
     position pos;
 
+    int test; //test reading file only
+
     if(f.is_open()){
-        f.read((char*)&grille,sizeof(int[H][W]));
+        f.read((char*)&test,sizeof(int));
+        f.read((char*)&test,sizeof(int));
+        for(int i=0;i<H;i++){
+            for(int j=0;j<W;j++){
+                f.read((char*)&grille[i][j],sizeof(int));
+            }
+        }
         f.read((char*)&pos,sizeof(position));
         f.close();
         delete map;
         map = new Map(grille,pos,BAS);
+
+
         scene->clear();
         updateScene();
+        ingame=true;
+
     }
     else
         QMessageBox::critical(this, "Erreur", "Impossible de charger le niveau");
+
+    return;
 }
 
 
@@ -277,10 +309,12 @@ void MainWindow::updateScene(){
  * Display a message box to ask whether the player wants to start a new game or restart the last one
  * @brief Member called when a level is finished
  * @author Nicolas SIMON
- * @date 09/07/2013
- * @version 1.0
+ * @date 11/07/2013
+ * @version 1.0.5
  */
 void MainWindow::niveau_termine(){
+    ingame=false;
+    recommencer->setEnabled(false);
     QMessageBox::information(this, "Félicitations", "Vous avez terminé le niveau!");
     int a=QMessageBox::question(this,"Nouvelle partie","Voulez vous charger un nouveau niveau ?",QMessageBox::Retry | QMessageBox::Yes | QMessageBox::No);
 
@@ -298,25 +332,28 @@ void MainWindow::niveau_termine(){
  * @brief Catch a key event
  * @param event
  * @author Nicolas SIMON
- * @date 09/07/2013
- * @version 1.0
+ * @date 11/07/2013
+ * @version 1.1
  */
 void MainWindow::keyPressEvent(QKeyEvent *event){
-    switch(event->key()){
-    case Qt::Key_Z:
-        map->getMario()->up();
-        break;
-    case Qt::Key_S:
-        map->getMario()->down();
-        break;
-    case Qt::Key_Q:
-        map->getMario()->left();
-        break;
-    case Qt::Key_D:
-        map->getMario()->right();
-        break;
+    if(ingame){
+        switch(event->key()){
+        case Qt::Key_Z:
+            map->getMario()->up();
+            break;
+        case Qt::Key_S:
+            map->getMario()->down();
+            break;
+        case Qt::Key_Q:
+            map->getMario()->left();
+            break;
+        case Qt::Key_D:
+            map->getMario()->right();
+            break;
+        }
+
+        scene->clear();
+        updateScene();
     }
 
-    scene->clear();
-    updateScene();
 }

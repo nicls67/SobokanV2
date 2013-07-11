@@ -87,6 +87,7 @@ private:
 
     Map *map;
     int obj_restant;
+    bool ingame;
 };
 
 #endif // MAINWINDOW_H
