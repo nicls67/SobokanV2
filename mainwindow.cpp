@@ -26,10 +26,10 @@
 /**
  *
  * @author Nicolas SIMON
- * @date 09/07/2013
+ * @date 11/07/2013
  * @brief MainWindow class constructor
  * @param parent
- * @version 1.0
+ * @version 1.0.1
  */
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -38,6 +38,8 @@ MainWindow::MainWindow(QWidget *parent)
     zoneCentrale = new QWidget;
     setCentralWidget(zoneCentrale);
     setFocusPolicy(Qt::StrongFocus);
+
+    map=NULL;
 
     creationMenu();
     creationScene();
@@ -163,6 +165,9 @@ void MainWindow::chargerNiveau(){
     map = new Map(grille,pos,BAS);
 
     scene->clear();
+    //delete scene;
+    //delete vue;
+    //creationScene();
     updateScene();
 
     recommencer->setEnabled(true);
