@@ -26,7 +26,7 @@ class Map
 {
 public:
     Map();
-    Map(int g[H][W], position pos, int sens_mario);
+    Map(int g[H][W], position *pos, int sens_mario);
 
 
     int getGrille(int x,int y);

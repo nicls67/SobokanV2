@@ -158,7 +158,7 @@ void MainWindow::chargerNiveau(){
     ifstream f(nomFichier.toStdString().c_str(), ios::in | ios::binary);
 
     int grille[H][W];
-    position pos;
+    position *pos = new position();
 
     int test; //for testing reading file only
 
@@ -170,7 +170,7 @@ void MainWindow::chargerNiveau(){
                 f.read((char*)&grille[i][j],sizeof(int));
             }
         }
-        f.read((char*)&pos,sizeof(position));
+        f.read((char*)pos,sizeof(position));
         f.close();
     }
     else{
@@ -206,7 +206,7 @@ void MainWindow::recommencerNiveau(){
     ifstream f(nomFichier.toStdString().c_str(), ios::in | ios::binary);
 
     int grille[H][W];
-    position pos;
+    position *pos = new position();
 
     int test; //test reading file only
 
@@ -218,7 +218,7 @@ void MainWindow::recommencerNiveau(){
                 f.read((char*)&grille[i][j],sizeof(int));
             }
         }
-        f.read((char*)&pos,sizeof(position));
+        f.read((char*)pos,sizeof(position));
         f.close();
         delete map;
         map = new Map(grille,pos,BAS);
@@ -242,8 +242,8 @@ void MainWindow::recommencerNiveau(){
  *
  * @brief Update the scene with new positions
  * @author Nicolas SIMON
- * @date 09/07/2013
- * @version 1.0
+ * @date 16/09/2013
+ * @version 1.1
  */
 void MainWindow::updateScene(){
 
@@ -278,22 +278,22 @@ void MainWindow::updateScene(){
     switch(map->getMario()->getDirection()){
     case HAUT:
         marioItem = scene->addPixmap(QPixmap("sprites//mario_haut.gif"));
-        marioItem->setPos(map->getMario()->getPosition().x*TAILLE_BLOC,map->getMario()->getPosition().y*TAILLE_BLOC);
+        marioItem->setPos(map->getMario()->getPosition()->x()*TAILLE_BLOC,map->getMario()->getPosition()->y()*TAILLE_BLOC);
         marioItem->setZValue(1);
         break;
     case BAS:
         marioItem = scene->addPixmap(QPixmap("sprites//mario_bas.gif"));
-        marioItem->setPos(map->getMario()->getPosition().x*TAILLE_BLOC,map->getMario()->getPosition().y*TAILLE_BLOC);
+        marioItem->setPos(map->getMario()->getPosition()->x()*TAILLE_BLOC,map->getMario()->getPosition()->y()*TAILLE_BLOC);
         marioItem->setZValue(1);
         break;
     case DROITE:
         marioItem = scene->addPixmap(QPixmap("sprites//mario_droite.gif"));
-        marioItem->setPos(map->getMario()->getPosition().x*TAILLE_BLOC,map->getMario()->getPosition().y*TAILLE_BLOC);
+        marioItem->setPos(map->getMario()->getPosition()->x()*TAILLE_BLOC,map->getMario()->getPosition()->y()*TAILLE_BLOC);
         marioItem->setZValue(1);
         break;
     case GAUCHE:
         marioItem = scene->addPixmap(QPixmap("sprites//mario_gauche.gif"));
-        marioItem->setPos(map->getMario()->getPosition().x*TAILLE_BLOC,map->getMario()->getPosition().y*TAILLE_BLOC);
+        marioItem->setPos(map->getMario()->getPosition()->x()*TAILLE_BLOC,map->getMario()->getPosition()->y()*TAILLE_BLOC);
         marioItem->setZValue(1);
         break;
     }

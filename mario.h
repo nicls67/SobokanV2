@@ -26,9 +26,9 @@ class Mario
 {
 public:
     Mario();
-    Mario(position p, int dir, Map *m);
+    Mario(position *p, int dir, Map *m);
 
-    position getPosition();
+    position* getPosition();
     int getDirection();
 
     void up();
@@ -37,7 +37,7 @@ public:
     void right();
 
 private:
-    position pos;
+    position *pos;
     int direction;
     Map *map;
 };

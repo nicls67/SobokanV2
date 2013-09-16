@@ -6,8 +6,8 @@
  * @file common.h
  * @brief Contains common definitions for all classes
  * @author Nicolas SIMON
- * @version 1.0
- * @date 09/07/2013
+ * @version 2.0
+ * @date 16/09/2013
  *
  */
 
@@ -25,11 +25,38 @@
 #define W 5
 
 /**
- * @brief Structure with coordinates
+ * @brief Represents a position on the map
+ * @version 2.0
+ * @date 16/09/2013
  */
-struct position{
-    int x;
-    int y;
+class position{
+public:
+    position(){_x=0; _y=0;}
+    position(int a, int b){_x=a; _y=b;}
+    inline int x(){return _x;}
+    inline int y(){return _y;}
+    inline void setX(int a){_x=a;}
+    inline void setY(int a){_y=a;}
+    /**
+     * @brief Increments x
+     */
+    inline void incX(){_x++;}
+    /**
+     * @brief Increments y
+     */
+    inline void incY(){_y++;}
+    /**
+     * @brief Decrements x
+     */
+    inline void decX(){_x--;}
+    /**
+     * @brief Decrements y
+     */
+    inline void decY(){_y--;}
+
+private:
+    int _x;
+    int _y;
 };
 
 
