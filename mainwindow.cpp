@@ -23,6 +23,10 @@
 
 #include "mainwindow.h"
 
+#ifdef Q_OS_WIN32
+    #include <windows.h>
+#endif
+
 /**
  *
  * @author Nicolas SIMON
@@ -139,7 +143,14 @@ void MainWindow::aboutSBK(){
  * @version 1.0
  */
 void MainWindow::exe_new_lvl(){
+#ifdef Q_OS_WIN32
+    // For Windows UAC:
+    ShellExecute(NULL, NULL,
+                 reinterpret_cast<const WCHAR*>("LevelCreator2.exe"),
+                 NULL, NULL, SW_SHOWNORMAL);
+#else
     QProcess::startDetached("LevelCreator2.exe");
+#endif
 }
 
 
