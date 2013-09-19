@@ -29,7 +29,6 @@
 
 /**
  *
- * @author Nicolas SIMON
  * @date 11/07/2013
  * @brief MainWindow class constructor
  * @param parent
@@ -68,7 +67,6 @@ MainWindow::~MainWindow(){}
 
 /**
  *
- * @author Nicolas SIMON
  * @date 09/07/2013
  * @brief Creating the menu bar
  * @version 1.0
@@ -110,7 +108,6 @@ void MainWindow::creationMenu(){
 /**
  *
  * @brief Create the scene of the game
- * @author Nicolas SIMON
  * @date 09/07/2013
  * @version 1.0
  */
@@ -126,7 +123,6 @@ void MainWindow::creationScene(){
 
 /**
  * @brief About the program
- * @author Nicolas SIMON
  * @date 09/07/2013
  * @version 1.0
  */
@@ -138,7 +134,6 @@ void MainWindow::aboutSBK(){
 
 /**
  * @brief Launch program LevelCreator
- * @author Nicolas SIMON
  * @date 09/07/2013
  * @version 1.0
  */
@@ -158,7 +153,6 @@ void MainWindow::exe_new_lvl(){
 /**
  *
  * @brief Load a level from a file
- * @author Nicolas SIMON
  * @date 11/07/2013
  * @version 1.0.2
  */
@@ -209,7 +203,6 @@ void MainWindow::chargerNiveau(){
 /**
  *
  * @brief Reload the current level
- * @author Nicolas SIMON
  * @date 11/07/2013
  * @version 1.0.2
  */
@@ -252,7 +245,6 @@ void MainWindow::recommencerNiveau(){
 /**
  *
  * @brief Update the scene with new positions
- * @author Nicolas SIMON
  * @date 16/09/2013
  * @version 1.1
  */
@@ -319,7 +311,6 @@ void MainWindow::updateScene(){
 /**
  * Display a message box to ask whether the player wants to start a new game or restart the last one
  * @brief Member called when a level is finished
- * @author Nicolas SIMON
  * @date 11/07/2013
  * @version 1.0.5
  */
@@ -342,7 +333,6 @@ void MainWindow::niveau_termine(){
  * This method catch a key event, update the map and update the scene. This method overlaods the "keyPressEvent" method of class QMainWindow.
  * @brief Catch a key event
  * @param event
- * @author Nicolas SIMON
  * @date 11/07/2013
  * @version 1.1
  */
