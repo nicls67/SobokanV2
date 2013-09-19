@@ -21,3 +21,5 @@ HEADERS  += mainwindow.h \
     common.h \
     mario.h \
     map.h
+
+win32: LIBS += -lshell32 # To handle UAC
