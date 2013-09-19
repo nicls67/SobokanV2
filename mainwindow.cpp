@@ -141,7 +141,7 @@ void MainWindow::exe_new_lvl(){
 #ifdef Q_OS_WIN32
     // For Windows UAC:
     ShellExecute(NULL, NULL,
-                 reinterpret_cast<const WCHAR*>("LevelCreator2.exe"),
+                 reinterpret_cast<const WCHAR*>(QString("LevelCreator2.exe").utf16()),
                  NULL, NULL, SW_SHOWNORMAL);
 #else
     QProcess::startDetached("LevelCreator2.exe");
